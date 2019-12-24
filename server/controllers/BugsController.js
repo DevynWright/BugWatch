@@ -1,5 +1,6 @@
 import express from "express";
-import bugService from "../services/BugService";
+import bugsService from "../services/BugsService";
+import notesService from "../services/NotesService"
 
 export default class BugController {
   constructor() {
@@ -8,14 +9,15 @@ export default class BugController {
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
       .get("", this.getAllBugs)
       .get("/:id", this.getBugsById)
+      .get("/:bugId/notes", this.getBugsNotes)
       .post("", this.newBug)
       .put("/:id", this.edit)
-      .delete("/:id", this.delete)
+      .delete("/:id", this.deleteBug)
   }
 
   async getAllBugs(req, res, next) {
     try {
-      let data = await bugService.getAllBugs();
+      let data = await bugsService.getAllBugs();
       return res.send(data);
     } catch (error) {
       next(error);
@@ -23,7 +25,15 @@ export default class BugController {
   }
   async getBugsById(req, res, next) {
     try {
-      let data = await bugService.getBugsById(req.params.id);
+      let data = await bugsService.getBugsById(req.params.id);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getBugsNotes(req, res, next) {
+    try {
+      let data = await notesService.getBugsNotes(req.params.BugId);
       return res.send(data);
     } catch (error) {
       next(error);
@@ -31,7 +41,7 @@ export default class BugController {
   }
   async newBug(req, res, next) {
     try {
-      let data = await bugService.newBug(req.body);
+      let data = await bugsService.newBug(req.body);
       return res.status(201).send(data);
     } catch (error) {
       next(error);
@@ -39,15 +49,15 @@ export default class BugController {
   }
   async edit(req, res, next) {
     try {
-      let data = await bugService.edit(req.params.id, req.body);
+      let data = await bugsService.edit(req.params.id, req.body);
       return res.send(data);
     } catch (error) {
       next(error);
     }
   }
-  async delete(req, res, next) {
+  async deleteBug(req, res, next) {
     try {
-      let data = await bugService.delete(req.params.id);
+      await bugsService.deleteBug(req.params.id);
       return res.send("Successfully Deleted Bug");
     } catch (error) {
       next(error);

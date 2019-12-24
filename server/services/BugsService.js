@@ -4,7 +4,7 @@ import ApiError from "../utils/ApiError"
 
 const _repository = mongoose.model("Bug", Bug);
 
-class BugService {
+class BugsService {
   async getAllBugs() {
     return await _repository.find({});
   }
@@ -20,14 +20,17 @@ class BugService {
     return data;
   }
   async edit(id, update){
-    let data = await _repository.findOneAndUpdate({id: id}, update);
+    let data = await _repository.findByIdAndUpdate(id, update);
     if(!data){
       throw new ApiError("Invalid Id", 400);
     }
+    if(data.closed == true) {
+      throw new ApiError("Can not edit closed bug!", 400)
+    }
     return data;
   }
-  async delete(id) {
-    let data = await _repository.findOneAndDelete({id: id});
+  async deleteBug(id) {
+    let data = await _repository.findByIdAndUpdate(id, { closed: true });
     if(!data){
       throw new ApiError("Invalid Id", 400);
     }
@@ -35,5 +38,5 @@ class BugService {
   }
 }
 
-const bugService = new BugService();
-export default bugService;
+const bugsService = new BugsService();
+export default bugsService;
