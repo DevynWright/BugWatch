@@ -2,7 +2,7 @@
   <div class="home container-fluid">
     <header class="row bg-white">
       <div class="col-12">
-        <router-link v-if="$route.name != 'Home'" :to="{ name: 'Home' }">
+        <router-link v-if="$route.name != 'Home'" :to="{ name: 'home' }">
         <h1><b>Bug W<img alt="Vue logo" src="../assets/logo.png">tch</b></h1>
         </router-link>
         <button>Report</button>
