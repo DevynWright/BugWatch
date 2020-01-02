@@ -8,8 +8,11 @@
         <div class="col-3">
             {{ bugData.reportedBy }}
         </div>
-        <div class="col-3">
+        <div class="col-3" v-if="bugData.closed === false">
             Open
+        </div>
+        <div class="col-3" v-if="bugData.closed === true">
+            Closed
         </div>
         <div class="col-3">
             {{ bugData.updatedAt }}

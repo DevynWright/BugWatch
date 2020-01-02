@@ -5,9 +5,23 @@
         <router-link v-if="$route.name != 'Home'" :to="{ name: 'home' }">
         <h1><b>Bug W<img alt="Vue logo" src="../assets/logo.png">tch</b></h1>
         </router-link>
-        <router-link v-if="$route.name != 'report'" :to="{ name: 'report' }">
-        <button>Report</button>
-        </router-link>
+        <div>
+          <button @click.prevent="show">Report</button>
+          <modal name="hello-world">
+            <form @submit.prevent="createBug">
+            <div class="form-group">
+                <input required type="text" v-model="newBug.title" placeholder="Bug Title...">
+            </div>
+            <div class="form-group">
+                <input required type="text" v-model="newBug.description" placeholder="Bug Description...">
+            </div>
+            <div class="form-check">
+                <input required type="text" v-model="newBug.reportedBy" placeholder="Reported By...">
+            </div>
+            <button type="submit" @click="hide" class="btn btn-primary">Submit</button>
+        </form>
+          </modal>
+        </div>
       </div>
     </header>
     <main class="row">
@@ -38,9 +52,35 @@
 import BugComponent from "@/components/Bug";
 export default {
   name: 'home',
+  data(){
+        return {
+            newBug: {
+                title: "",
+                description: "",
+                reportedBy: ""
+            }
+        }
+    },
   mounted(){
     this.$store.dispatch("getBugs");
   },
+  methods: {
+  createBug() {
+    let bug = { ...this.newBug };
+    this.$store.dispatch("createBug", bug);
+    this.newBug = {
+      title: "",
+      description: "",
+      reportedBy: ""
+    }
+  },
+  show () {
+    this.$modal.show('hello-world');
+  },
+  hide () {
+    this.$modal.hide('hello-world');
+  }
+},
   computed: {
     bugs() {
       return this.$store.state.bugs;

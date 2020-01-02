@@ -20,9 +20,13 @@
                     <h6>Reported By:</h6>
                     <h1>{{bug.reportedBy}}</h1>
                 </div>
-                <div class="col-2">
+                <div class="col-2" v-if="bug.closed === false">
                     <h6>Status:</h6>
-                    <h1>{{bug.closed}}</h1>
+                    <h1>Open</h1>
+                </div>
+                <div class="col-2" v-if="bug.closed === true">
+                    <h6>Status:</h6>
+                    <h1>Closed</h1>
                 </div>
                 <div id="bugDesc" class="col-12">
                     <p>{{bug.description}}</p>
@@ -30,39 +34,73 @@
             </div>
         </div>
         <div>
-            <button>Comment</button>
-            <button>Close Bug</button>
+            <button @click="closeBug">Close Bug</button>
+            <button @click="show">Add Note</button>
+            <modal name="noteModal">
+                <form @submit.prevent="createNote">
+                    <input required type="text" v-model="newNote.reportedBy" placeholder="Your Name...">
+                    <input required type="text" v-model="newNote.content" placeholder="Message...">
+                    <button @click="hide" type="submit" class="btn btn-primary">Add Note</button>
+                </form>
+            </modal>
         </div>
     </main>
+    
     <div class="row">
         <div class="col-10 m-auto">
-            <h3>Notes</h3>
-            <div class="row">
-                <div class="col-3">
-                    Name
-                </div>
-                <div class="col-3">
-                    Message
-                </div>
-                <div class="col-3">
-                    Delete
-                </div>
-            </div>
+        <notes/>    
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import notes from "../components/Note";
 export default {
     name: "BugDetails",
+    data(){
+        return {
+            newNote: {
+                reportedBy: "",
+                content: "",
+                bug: this.$route.params.id
+            }
+        }
+    },
     mounted(){
         this.$store.dispatch("getBugById", this.$route.params.id);
+        this.$store.dispatch("getNotesByBugId", this.$route.params.id);
+    },
+    methods: {
+        closeBug(){
+            this.$store.dispatch("closeBug", this.$route.params.id)
+        },
+        createNote(){
+            let note = { ...this.newNote };
+            this.newNote = {
+                reportedBy : "",
+                content: "",
+                bug: this.$route.params.id
+            };
+            this.$store.dispatch("createNote", note);
+        },
+        show () {
+            this.$modal.show('noteModal');
+        },
+        hide () {
+            this.$modal.hide('noteModal');
+        }
     },
     computed: {
         bug() {
             return this.$store.state.activeBug
+        },
+        note() {
+            return this.$store.state.notes
         }
+    },
+    components: {
+        notes
     }
 }
 </script>
