@@ -69,7 +69,7 @@ export default {
     },
     mounted(){
         this.$store.dispatch("getBugById", this.$route.params.id);
-        this.$store.dispatch("getNotesByBugId", this.$route.params.id);
+        this.$store.dispatch("getNotes", this.$route.params.id);
     },
     methods: {
         closeBug(){
