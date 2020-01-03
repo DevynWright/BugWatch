@@ -8,14 +8,14 @@
         <div class="col-3">
             {{ bugData.reportedBy }}
         </div>
-        <div id="Open" class="col-3" v-if="bugData.closed === false">
+        <div style="color: green" class="col-3" v-if="bugData.closed === false">
             Open
         </div>
-        <div id="Closed" class="col-3" v-if="bugData.closed === true">
+        <div style="color: red" class="col-3" v-if="bugData.closed === true">
             Closed
         </div>
         <div class="col-3">
-            {{ bugData.updatedAt.toString() }}
+            {{ updated }}
         </div>
     </div>
 </template>
@@ -23,7 +23,13 @@
 <script>
 export default {
     name: "Bug",
-    props: ["bugData"]
+    props: ["bugData"],
+    computed:{
+        updated(){
+            let up = new Date(this.bugData.updatedAt);
+            return up.toLocaleDateString();
+        }
+    }
 }
 </script>
 

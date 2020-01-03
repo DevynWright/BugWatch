@@ -36,7 +36,23 @@ export default {
     methods: {
         deleteNote(){
             let note = this.$store.state.notes.find(note => note.bug == this.$route.params.id)
-            this.$store.dispatch("deleteNote", note)
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this comment!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your comment has been deleted!", {
+                    icon: "success",
+            });
+                this.$store.dispatch("deleteNote", note)
+            } else {
+                swal("Your comment is safe!");
+                }
+            });
         }
     }
 }

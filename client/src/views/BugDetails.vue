@@ -10,8 +10,12 @@
     <main class="row">
         <div class="col-11 m-auto">
             <div class="row">
-                <div class="col-12">
-                    <h6>Title:</h6><h1>{{bug.title}}</h1>
+                <div class="col-10">
+                    <h6>Title:</h6>
+                    <h1>{{bug.title}}</h1>
+                </div>
+                <div class="col-2">
+                    <button @click="closeBug">Close Bug</button>
                 </div>
                 <div class="col-10">
                     <h6>Reported By:</h6>
@@ -31,7 +35,7 @@
             </div>
         </div>
         <div>
-            <button @click="closeBug">Close Bug</button>
+            <button >Edit Bug</button>
             <button @click="show">Add Note</button>
             <modal name="noteModal">
                 <form @submit.prevent="createNote">
@@ -60,6 +64,7 @@ export default {
             newNote: {
                 reportedBy: "",
                 content: "",
+                closed: Boolean,
                 bug: this.$route.params.id
             }
         }
@@ -70,7 +75,23 @@ export default {
     },
     methods: {
         closeBug(){
-            this.$store.dispatch("closeBug", this.$route.params.id)
+            swal({
+                title: "Are you sure?",
+                text: "Once closed, you will not be able to reopen this bug!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+            });
+                this.$store.dispatch("closeBug", this.$route.params.id)
+            } else {
+                swal("Bug will stay Open!");
+            }
+            });
         },
         createNote(){
             let note = { ...this.newNote };
@@ -103,6 +124,9 @@ export default {
 </script>
 
 <style>
+main{
+    margin-top: 50px
+}
 #bugDisc {
     border-style: solid;
     border-width: 5px;
