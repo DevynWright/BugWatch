@@ -72,7 +72,12 @@ export default {
       title: "",
       description: "",
       reportedBy: ""
-    }
+    };
+    this.bugDetail();
+  },
+  bugDetail(){
+    let activeBug = this.activeBug;
+    this.$router.push({ name: "bugDetails", params: { id: this.$store.state.activeBug.id}})
   },
   show () {
     this.$modal.show('hello-world');
@@ -84,6 +89,9 @@ export default {
   computed: {
     bugs() {
       return this.$store.state.bugs;
+    },
+    activeBug(){
+      return this.$store.state.activeBug;
     }
   },
   components: {

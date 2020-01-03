@@ -5,9 +5,6 @@
         <router-link v-if="$route.name != 'Home'" :to="{ name: 'home' }">
         <h1><b>Bug W<img alt="Vue logo" src="../assets/logo.png">tch</b></h1>
         </router-link>
-        <router-link v-if="$route.name != 'report'" :to="{ name: 'report' }">
-        <button>Report</button>
-        </router-link>
       </div>
     </header>
     <main class="row">

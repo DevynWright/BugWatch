@@ -24,7 +24,7 @@ class NotesService {
     return data;
   }
   async delete(id) {
-    let data = await _repository.findOneAndDelete(id);
+    let data = await _repository.findOneAndRemove(id);
     if(!data){
       throw new ApiError("Invalid Id", 400);
     }

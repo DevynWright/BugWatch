@@ -32,6 +32,12 @@ export default {
         notes(){
             return this.$store.state.notes
         }
+    },
+    methods: {
+        deleteNote(){
+            let note = this.$store.state.notes.find(note => note.bug == this.$route.params.id)
+            this.$store.dispatch("deleteNote", note)
+        }
     }
 }
 </script>
