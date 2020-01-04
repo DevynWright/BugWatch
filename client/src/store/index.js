@@ -4,7 +4,7 @@ import axios from "axios";
 
 let _api = axios.create({
   baseURL: "//localhost:3000/api",
-  timeout: 3000
+  timeout: 5000
 });
 
 Vue.use(Vuex)
@@ -68,8 +68,8 @@ export default new Vuex.Store({
       let res = await _api.delete("notes/" + note.id);
       dispatch("getNotes");
     },
-    async editBug({ commit, dispatch }, data) {
-      let res = await _api.put("bugs/" + data.id, data )
+    async editBug({ commit, dispatch },{id, bug}) {
+      let res = await _api.put("bugs/" + id, bug )
     }
   },
   modules: {

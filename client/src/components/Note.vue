@@ -19,7 +19,7 @@
             {{ note.content }}
         </div>
         <div class="col-1">
-            <p @click="deleteNote">X</p>
+            <p @click="deleteNote(note.id)">X</p>
         </div>
     </div>
 </div>
@@ -34,8 +34,8 @@ export default {
         }
     },
     methods: {
-        deleteNote(){
-            let note = this.$store.state.notes.find(note => note.bug == this.$route.params.id)
+        deleteNote(id){
+            let note = this.$store.state.notes.find(note => note.id == id)
             swal({
                 title: "Are you sure?",
                 text: "Once deleted, you will not be able to recover this comment!",

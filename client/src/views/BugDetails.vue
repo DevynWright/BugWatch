@@ -37,6 +37,9 @@
         <div v-if="bug.closed === false" class="row">
             <editBug/>
         </div>
+        <div class="row">
+            <div class="col">
+
             <button @click="show">Add Note</button>
             <modal name="noteModal">
                 <form @submit.prevent="createNote">
@@ -45,6 +48,8 @@
                     <button @click="hide" type="submit" class="btn btn-primary">Add Note</button>
                 </form>
             </modal>
+            </div>
+        </div>
         
     </main>
     
@@ -90,6 +95,7 @@ export default {
                 icon: "success",
             });
                 this.$store.dispatch("closeBug", this.$route.params.id)
+                this.$store.dispatch("getBugById", this.$route.params.id)
             } else {
                 swal("Bug will stay Open!");
             }

@@ -92,6 +92,7 @@ export default {
       reportedBy: ""
     };
     this.bugDetail();
+    this.$store.dispatch("getNotesByBugId")
   },
   bugDetail(){
     let activeBug = this.activeBug;
