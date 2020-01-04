@@ -29,7 +29,14 @@ export default {
             let up = new Date(this.bugData.updatedAt);
             return up.toLocaleDateString();
         }
-    }
+    },
+    // methods: {
+    //     isClosed(){
+    //         return {
+
+    //         }
+    //     }
+    // }
 }
 </script>
 

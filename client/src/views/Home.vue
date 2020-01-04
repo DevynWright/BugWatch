@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="col-2">
-        <button @click.prevent="show">Report</button>
+        <button id="button" @click.prevent="show">Report</button>
         <modal name="bug-modal">
           <form @submit.prevent="createBug">
             <div class="form-group">
@@ -19,7 +19,7 @@
             <div class="form-check">
                 <input required type="text" v-model="newBug.reportedBy" placeholder="Reported By...">
             </div>
-            <button type="submit" @click="hide" class="btn btn-primary">Submit</button>
+            <button id="button" type="submit" @click="hide" class="btn btn-primary">Submit</button>
           </form>
         </modal>
       </div>
@@ -49,6 +49,7 @@
           </div>
           <div class="col-3">
             <h2>Status</h2>
+            
           </div>
           <div class="col-3">
             <h2>Last Modified</h2>
@@ -79,6 +80,9 @@ export default {
     this.$store.dispatch("getBugs");
   },
   methods: {
+    sortBy(prop){
+      this.bug.sort((a,b) => a[closed] < b[closed] ? -1 : 1)
+    }, 
   createBug() {
     let bug = { ...this.newBug };
     this.$store.dispatch("createBug", bug);
@@ -133,9 +137,15 @@ header {
   border-bottom-style: solid;
   border-bottom-width: 3px
 }
-button {
+#button {
   height: 2.5rem;
   width: 9rem;
+  background-color: cadetblue;
+  border-radius: 10px
+}
+#sort-button {
+  height: 2.7rem;
+  width: 2.7rem;
   background-color: cadetblue;
   border-radius: 10px
 }

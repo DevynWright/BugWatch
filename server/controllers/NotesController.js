@@ -9,15 +9,6 @@ export default class NoteController {
       .post("", this.create)
       .delete("/:id", this.delete)
   }
-
-  async getNotesById(req, res, next) {
-    try {
-      let data = await notesService.getNotesById(req.params.id);
-      return res.send(data);
-    } catch (error) {
-      next(error);
-    }
-  }
   async create(req, res, next) {
     try {
       let data = await notesService.create(req.body);

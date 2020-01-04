@@ -23,19 +23,20 @@
                 </div>
                 <div class="col-2" v-if="bug.closed === false">
                     <h6>Status:</h6>
-                    <h1>Open</h1>
+                    <h1 style="color:green">Open</h1>
                 </div>
                 <div class="col-2" v-if="bug.closed === true">
                     <h6>Status:</h6>
-                    <h1>Closed</h1>
+                    <h1 style="color:red">Closed</h1>
                 </div>
                 <div id="bugDesc" class="col-12">
                     <p>{{bug.description}}</p>
                 </div>
             </div>
         </div>
-        <div>
-            <button >Edit Bug</button>
+        <div v-if="bug.closed === false" class="row">
+            <editBug/>
+        </div>
             <button @click="show">Add Note</button>
             <modal name="noteModal">
                 <form @submit.prevent="createNote">
@@ -44,7 +45,7 @@
                     <button @click="hide" type="submit" class="btn btn-primary">Add Note</button>
                 </form>
             </modal>
-        </div>
+        
     </main>
     
     <div class="row">
@@ -56,6 +57,7 @@
 </template>
 
 <script>
+import editBug from "../components/editBug"
 import notes from "../components/Note";
 export default {
     name: "BugDetails",
@@ -118,7 +120,8 @@ export default {
         }
     },
     components: {
-        notes
+        notes,
+        editBug
     }
 }
 </script>
