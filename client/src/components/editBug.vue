@@ -5,11 +5,11 @@
     <form @submit.prevent="editBug">
       <div class="form-group">
         <label for="title">Edit Title</label>
-        <input name="title" required type="text" v-model="editBug.title" placeholder="Bug Title...">
+        <input name="title" required type="text" v-model="editedBug.title" placeholder="Bug Title...">
       </div>
       <div class="form-group">
         <label for="description">Edit Description</label>
-        <input name="description" required type="text" v-model="editBug.description" placeholder="Bug Description...">
+        <input name="description" required type="text" v-model="editedBug.description" placeholder="Bug Description...">
       </div>
         <button type="submit" @click="hide" class="btn btn-primary">Submit</button>
     </form>
@@ -24,19 +24,21 @@ data(){
   return {
     editedBug: {
       title: "",
-      description: ""
+      description: "",
+      bug: this.$route.params.id
+
     }
   }
 },
 methods:{
   editBug(){
-    let bug = {...this.editedBug}
-    let editedBug = {
+    let changedBug = { ...this.editedBug };
+    this.$store.dispatch("editBug", changedBug)
+    this.editedBug = {
       title: this.title,
       description: this.description,
-      id: this.$route.params.id
+      bug: this.$route.params.id
     };
-    this.$store.dispatch("editBug", bug)
   },
   show () {
     this.$modal.show('editBug');

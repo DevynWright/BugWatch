@@ -32,8 +32,8 @@
             
           </div>
           <div class="col-4">
+            <label for="hide-closed">Hide Closed:  </label>
             <input type="checkbox" name="hide-closed">
-            <p>hide closed</p>
           </div>
         </div>
       </div>
@@ -95,7 +95,6 @@ export default {
     this.$store.dispatch("getNotesByBugId")
   },
   bugDetail(){
-    let activeBug = this.activeBug;
     this.$router.push({ name: "bugDetails", params: { id: this.$store.state.activeBug.id}})
   },
   show () {
