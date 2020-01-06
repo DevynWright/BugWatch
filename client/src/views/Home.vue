@@ -32,8 +32,8 @@
             
           </div>
           <div class="col-4">
-            <label for="hide-closed">Hide Closed:  </label>
-            <input @click.prevent="" type="checkbox" name="hide-closed">
+            <label for="hide-closed">Sort by Status:  </label>
+            <input @click.prevent="sortBy" type="checkbox" name="hide-closed">
           </div>
         </div>
       </div>
@@ -80,9 +80,16 @@ export default {
     this.$store.dispatch("getBugs");
   },
   methods: {
-    sortBy(prop){
-      this.bug.sort((a,b) => a[closed] < b[closed] ? -1 : 1)
-    }, 
+    sortBy(){
+      let b = this.$store.state.bugs;
+      b.sort((a,b)=> {
+        if(a.closed > b.closed){
+          return 1
+        } else {
+          return -1
+        }
+      })
+    },
   createBug() {
     let bug = { ...this.newBug };
     this.$store.dispatch("createBug", bug);
