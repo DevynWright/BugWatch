@@ -21,7 +21,7 @@
                     <h6>Reported By:</h6>
                     <h1>{{bug.reportedBy}}</h1>
                 </div>
-                <div class="col-2" v-if="bug.closed === false">
+                <div :key="bug.id" class="col-2" v-if="bug.closed === false">
                     <h6>Status:</h6>
                     <h1 style="color:green">Open</h1>
                 </div>

@@ -70,6 +70,7 @@ export default new Vuex.Store({
     },
     async editBug({commit, dispatch}, bug) {
       let res = await _api.put("bugs/" + bug.bug, bug )
+      commit("setActiveBug", res.data)
     }
   },
   modules: {

@@ -33,7 +33,7 @@
           </div>
           <div class="col-4">
             <label for="hide-closed">Hide Closed:  </label>
-            <input type="checkbox" name="hide-closed">
+            <input @click.prevent="" type="checkbox" name="hide-closed">
           </div>
         </div>
       </div>

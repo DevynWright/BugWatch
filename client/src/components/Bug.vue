@@ -11,7 +11,7 @@
         <div style="color: green" class="col-3" v-if="bugData.closed === false">
             Open
         </div>
-        <div style="color: red" class="col-3" v-if="bugData.closed === true">
+        <div id="closedBug" style="color: red" class="col-3" v-if="bugData.closed === true">
             Closed
         </div>
         <div class="col-3">
@@ -30,13 +30,6 @@ export default {
             return up.toLocaleDateString();
         }
     },
-    // methods: {
-    //     isClosed(){
-    //         return {
-
-    //         }
-    //     }
-    // }
 }
 </script>
 
